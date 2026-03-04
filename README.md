@@ -1,5 +1,5 @@
 
-# TPRV Genotyping and Phylogenetic Analysis Pipeline
+# PARV4 Genotyping and Phylogenetic Analysis Pipeline
 
 This repository contains scripts and tools for:
 1. **Genotyping** *Parv4* virus sequences based on SNP patterns from VCF files.
