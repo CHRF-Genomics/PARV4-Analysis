@@ -1,0 +1,557 @@
+---
+title: "PARV4 manuscript 2015-2022"
+author: "N Kanon"
+date: "2025-04-20"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    df_print: paged
+---
+
+## Packages
+### Load necessary packages
+```{r,message=FALSE, warning=FALSE}
+library(ggplot2)
+library(tidyverse) 
+library(readxl)
+library(lubridate)
+library(dplyr)
+library(ggplot2)
+library(ggthemes) 
+library(ggsci) 
+library(hrbrthemes)
+library(ggridges)
+library(plyr)
+library(ggpubr)
+library(viridis)
+library(patchwork)
+library(viridisLite)
+library(rgdal)
+library(sp)
+library(RColorBrewer)
+library(sf)
+library(gridExtra)
+library(ggplot2)
+library(leaflet)
+library(tmap)
+
+```
+
+
+
+
+
+## Age distribution [Fig2A]
+```{r,results='show', warning=FALSE, message=FALSE}
+
+# Read dataset
+fig2<-read.csv("C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/fig2a-final.csv")
+attach(fig2)
+
+# Plot
+age<-ggplot(fig2, aes(x=AgeMInt,fill=PARV4))+geom_density(alpha=0.3,linewidth=0.6,lty=1)+scale_fill_manual(values = c("grey", "maroon"))+scale_color_lancet()+theme_clean()
+median <- ddply(fig2, "PARV4", summarise, grp.median=median(AgeMInt))
+age<- age+geom_vline(data=median, aes(xintercept=grp.median, color=PARV4),
+                     linetype="dashed",linewidth=1)+labs(x = "Age in Month", y = "PARV4")+scale_x_continuous(breaks = seq(from = 0, to = 200, by = 10))+theme(
+                       strip.text = element_text(size = 20),
+                       axis.text = element_text(size = 10, face = "bold"),
+                       legend.text = element_text(size = 20),
+                       legend.title = element_text(size = 20),
+                       axis.text.x = element_text(angle = 0, hjust = 1),
+                       axis.title.x = element_text(size = 20, face = "bold"),
+                       axis.title.y = element_text(size = 20, face = "bold"),legend.position="right")
+
+p2a<-age +geom_text(data = median[1, ], aes(x = grp.median, y = 0, label = paste0("Median : ", round(grp.median, 2))),
+            color = "darkblue", vjust = -30, size = 3, hjust = -0.2) + geom_text(data = median[2, ], aes(x = grp.median, y = 0, label = paste0("Median : ", round(grp.median, 2))),
+            color = "red", vjust = -35, size = 3, hjust = -0.2)
+
+print(p2a) 
+
+# Save the plot
+ggsave(
+  filename = "C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/fig2a_plot.pdf",
+  plot = p2a,
+  width = 10, 
+  height = 6)
+
+
+# Save the plot  (TIFF)
+ggsave(
+  filename = "C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/fig2a_plot.tiff",
+  plot = p2a,
+  width = 10,
+  height = 6,
+  dpi = 300,
+  device = "tiff")
+
+```
+
+
+
+## Hospital duration for both Positive and Negative Cases [Fig2B]
+```{r,results='show', warning=FALSE, message=FALSE}
+
+
+# Read dataset
+fig2b<-read.csv("C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/fig2b-final.csv")
+attach(fig2b)
+
+
+Hosp<-ggplot(fig2, aes(x=HospStay,fill=PARV4))+geom_histogram(alpha=0.3,linewidth=0.6,lty=1)+scale_fill_manual(values = c("grey", "maroon"))+scale_color_lancet()+theme_clean()
+median <- ddply(fig2, "PARV4", summarise, grp.median=median(HospStay))
+Hosp<- Hosp+geom_vline(data=median, aes(xintercept=grp.median, color=PARV4),
+                     linetype="dashed",linewidth=1)+labs(x = "Hospital duration in days", y = "Count")+scale_x_continuous(breaks = seq(from = 0, to = 200, by = 10))+theme(
+                       strip.text = element_text(size = 20),
+                       axis.text = element_text(size = 10, face = "bold"),
+                       legend.text = element_text(size = 20),
+                       legend.title = element_text(size = 20),
+                       axis.text.x = element_text(angle = 0, hjust = 1),
+                       axis.title.x = element_text(size = 20, face = "bold"),
+                       axis.title.y = element_text(size = 20, face = "bold"),legend.position="right")
+
+suppHosp<-Hosp +geom_text(data = median[1, ], aes(x = grp.median, y = 0, label = paste0("Median : ", round(grp.median, 2))),
+            color = "darkblue", vjust = -30, size = 3, hjust = -0.2) + geom_text(data = median[2, ], aes(x = grp.median, y = 0, label = paste0("Median : ", round(grp.median, 2))),
+            color = "red", vjust = -35, size = 3, hjust = -0.2)
+
+print(suppHosp)
+
+
+# Save the plot
+ggsave(
+  filename = "C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/SuppHosp_plot.pdf",
+  plot = suppHosp,
+  width = 10, 
+  height = 6)
+
+
+# Save the plot  (TIFF)
+ggsave(
+  filename = "C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/SuppHosp_plot.tiff",
+  plot = suppHosp,
+  width = 10,
+  height = 6,
+  dpi = 300,
+  device = "tiff")
+
+
+
+
+```
+
+
+## Odds Ratio [Fig3]
+```{r,results='show', warning=FALSE, message=FALSE}
+odds<-read.csv("C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/figOR.csv")
+attach(odds)
+
+# Run logistic regression without any adjustment (null model)
+null_model <- glm(Death~ Result, data = odds, family = binomial)
+
+# Run logistic regression adjusting age (continous)
+age_adjusted_model <- glm(Death ~  Result+AgeMInt, data = odds, family = binomial)
+
+# Run logistic regression adjusting age (categorical)
+ageGroup_adjusted_model <- glm(Death ~  Result+AgeGroup, data = odds, family = binomial)
+
+# Run logistic regression adjusting Sex
+Sex_adjusted_model <- glm(Death ~  Result+Gender, data = odds, family = binomial)
+
+
+# Run logistic regression adjusting Coinfection without B19
+coinfec_adjusted_model <- glm(Death ~  Result+ CoInfection, data = odds, family = binomial)
+
+
+# Run logistic regression adjusting Coinfection with B19
+coinfecB19_adjusted_model <- glm(Death ~  Result+ CoInfectionB19, data = odds, family = binomial)
+
+# Run logistic regression adjusting only with B19
+B19_adjusted_model <- glm(Death ~  Result+ B19, data = odds, family = binomial)
+
+
+# Run logistic regression adjusting WBC
+wbc_adjusted_model <- glm(Death ~  Result+ WBC, data = odds, family = binomial)
+
+
+# Run logistic regression adjusting Diagnosis- Neurological Manifestation
+DiagNM_adjusted_model <- glm(Death ~  Result+ DiagNM, data = odds, family = binomial)
+
+
+# Run logistic regression adjusting Diagnosis- Respiratory Manifestation
+DiagRM_adjusted_model <- glm(Death ~  Result+ DiagRM, data = odds, family = binomial)
+
+
+# Run logistic regression adjusting Diagnosis- Systematic Infection
+DiagSI_adjusted_model <- glm(Death ~  Result+ DiagSI, data = odds, family = binomial)
+
+# Run logistic regression adjusting Diagnosis- Febrile Illness
+DiagFI_adjusted_model <- glm(Death ~  Result+ DiagFI, data = odds, family = binomial)
+
+# Run logistic regression adjusting Diagnosis- Gastrointestinal Manifestation
+DiagGastroM_adjusted_model <- glm(Death ~  Result+ DiagGM, data = odds, family = binomial)
+
+# Run logistic regression adjusting Diagnosis- Renal Manifestation
+DiagRenalM_adjusted_model <- glm(Death ~  Result+ DiagRenalM, data = odds, family = binomial)
+
+# Run logistic regression adjusting Diagnosis- Congenital Cardiovascular Manifestation
+DiagCCM_adjusted_model <- glm(Death ~  Result+ DiagCM, data = odds, family = binomial)
+
+# Run logistic regression adjusting Diagnosis- Perinatal Asphyxia
+DiagPeriAs_adjusted_model <- glm(Death ~  Result+ DiagPA, data = odds, family = binomial)
+
+# Run logistic regression adjusting Diagnosis- PLBW
+DiagPLBW_adjusted_model <- glm(Death ~  Result+ DiagPreterm, data = odds, family = binomial)
+
+# Run logistic regression adjusting Diagnosis- Neonatal Jaundice
+DiagNJ_adjusted_model <- glm(Death ~  Result+ DiagNJ, data = odds, family = binomial)
+
+# Run logistic regression adjusting Diagnosis- Others
+DiagOther_adjusted_model <- glm(Death ~  Result+ DiagOthers, data = odds, family = binomial)
+
+
+# Model 
+models <- list(
+  Crude = null_model,
+  "Age-adjusted" = age_adjusted_model,
+  "Coinfection-adjusted" = coinfec_adjusted_model,
+  "Coinfection+B19-adjusted" = coinfecB19_adjusted_model,
+  "B19-adjusted" = B19_adjusted_model,
+  "WBC-adjusted" = wbc_adjusted_model,
+  "Neurological Manifestation" = DiagNM_adjusted_model,
+  "Respiratory Manifestation" = DiagRM_adjusted_model,
+  "Systemic Infections" = DiagSI_adjusted_model,
+  "Febrile Illness" = DiagFI_adjusted_model,
+  "Gastrointestinal Manifestation" = DiagGastroM_adjusted_model,
+  "Genitourinary Manifestation" = DiagRenalM_adjusted_model,
+  "Congenital Cardiovascular Manifestation" = DiagCCM_adjusted_model,
+  "Perinatal Asphyxia" = DiagPeriAs_adjusted_model,
+  PLBW = DiagPLBW_adjusted_model,
+  "Neonatal Jaundice" = DiagNJ_adjusted_model,
+  Others = DiagOther_adjusted_model)
+
+# OR, LCI, and UCI
+OR <- sapply(models, function(m) exp(coef(m)[2]))
+CI <- t(sapply(models, function(m) exp(confint(m, parm = 2))))
+
+# Combine results
+c.data <- data.frame(
+  Model = names(models),
+  OR = OR,
+  LCI = CI[, 1],
+  UCI = CI[, 2],
+  row.names = NULL)
+
+print(c.data)
+
+
+
+# Model (main)
+model1 <- list(
+  Crude = null_model,
+  "Age-adjusted" = age_adjusted_model,
+  "Coinfection-adjusted" = coinfecB19_adjusted_model,
+  "B19-adjusted" = B19_adjusted_model,
+  "WBC-adjusted" = wbc_adjusted_model)
+
+# OR, LCI, and UCI
+OR <- sapply(model1, function(m) exp(coef(m)[2]))
+CI <- t(sapply(model1, function(m) exp(confint(m, parm = 2))))
+
+# Combine results
+c1.data <- data.frame(
+  Model = names(model1),
+  OR = OR,
+  LCI = CI[, 1],
+  UCI = CI[, 2],
+  row.names = NULL)
+
+# Plot
+pc1<-ggplot(c1.data) +
+  geom_point(aes(x = factor(Model, level=c("WBC-adjusted","B19-adjusted","Coinfection-adjusted","Age-adjusted", "Crude")), y = OR),size=3.5,color="lightgreen") +geom_errorbar(aes(x = Model, y = OR, ymin = LCI, ymax = UCI), width = 0.2,size=0.6,color='gray50') +
+  geom_hline(aes(yintercept = 1), linetype = 2) +theme_base() +coord_flip() +
+  theme(
+    strip.text = element_text(size = 15),
+    axis.text = element_text(size = 10, face = "bold"),
+    legend.text = element_text(size = 20),
+    legend.title = element_text(size = 20),
+    axis.text.x = element_text(angle = 0, hjust = 1),
+    axis.title.x = element_text(size = 15, face = "bold"),
+    axis.title.y = element_text(size = 15, face = "bold"),legend.position="none") +scale_color_lancet()+theme(panel.grid.minor = element_blank())+scale_y_continuous(limits=c(0,5),breaks=seq(0,5,0.5))+ylab("Odds Ratio")+xlab("")
+
+print(pc1)
+
+# Save the plot
+ggsave(
+  filename = "C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/fig4_plot.pdf",
+  plot = pc1,
+  width = 10, 
+  height = 6) 
+
+# Save the plot  (TIFF)
+ggsave(
+  filename = "C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/fig4_plot.tiff",
+  plot = pc1,
+  width = 10,
+  height = 6,
+  dpi = 300,
+  device = "tiff")
+
+```
+
+
+
+## Supplementary Figures
+
+### Prevalence of Parv4 positivity from 2015-2022 
+```{r,results='show', warning=FALSE, message=FALSE}
+
+# Read dataset
+fig2supa<-read.csv("C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/fig2supa.csv")
+attach(fig2supa)
+
+# Plots
+trend1 <- subset(fig2supa, Trend == "CSF Tested")
+trend2 <- subset(fig2supa, Trend == "PARV4 Positive")
+trend3 <- subset(fig2supa, Trend == "Positivity")
+
+trend1_plot <- ggplot(trend1, aes(year, Count)) +                                      
+  geom_point(alpha=0.5) + 
+  geom_line(linewidth = 0.8, color = "black") + 
+  scale_x_continuous(breaks = c(2015:2022)) + 
+  scale_y_continuous(limits = c(0, 500)) +  
+  theme_base() + scale_color_lancet() + 
+  labs( y = "count",title="CSF Tested") +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 20),
+    strip.text = element_text(size = 20),
+    axis.text = element_text(size = 12, face = "bold"),
+    legend.text = element_text(size = 20),
+    legend.title = element_text(size = 20),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank(),
+    axis.title.y = element_text(size = 15, face = "bold"),legend.position = "none")
+
+trend2_plot <- ggplot(trend2, aes(year, Count)) +                                      
+  geom_point(alpha=0.5) + 
+  geom_line(linewidth = 0.8, color = "black") + 
+  scale_x_continuous(breaks = c(2015:2022)) + 
+  scale_y_continuous(limits = c(0, 100)) +  
+  theme_base() + scale_color_lancet() + 
+  labs( y = "count",title="PARV4 Positive") +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 20),
+    strip.text = element_text(size = 20),
+    axis.text = element_text(size = 12, face = "bold"),
+    legend.text = element_text(size = 20),
+    legend.title = element_text(size = 20),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank(),
+    axis.title.y = element_text(size = 15, face = "bold"),legend.position = "none")
+
+trend3_plot <- ggplot(trend3, aes(year, Count)) +                                      
+  geom_point(alpha=0.5) + 
+  geom_line(linewidth = 0.8, color = "black") + 
+  scale_x_continuous(breaks = c(2015:2022)) + 
+  scale_y_continuous(limits = c(0.0, 1.0)) +  
+  theme_base() + scale_color_lancet() + 
+  labs(x = "year", y = "proportion",title="Positivity") +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 20),
+    strip.text = element_text(size = 20),
+    axis.text = element_text(size = 12, face = "bold"),
+    legend.text = element_text(size = 20),
+    legend.title = element_text(size = 20),
+    axis.text.x = element_text(angle = 0, hjust = 1),
+    axis.title.x = element_text(size = 20, face = "bold"),
+    axis.title.y = element_text(size = 15, face = "bold"),
+    legend.position = "none")
+
+# Combine the plots 
+combined_plot <- trend1_plot / trend2_plot / trend3_plot
+print(combined_plot)
+
+# Save the plot (pdf)
+ggsave(
+  filename = "C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/fig2supa_plot.pdf",
+  plot = combined_plot,
+  width = 6, 
+  height = 12)
+
+
+# Save the plot  (TIFF)
+ggsave(
+  filename = "C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/fig2supa_plot.tiff",
+  plot = combined_plot,
+  width = 6,
+  height = 12,
+  dpi = 300,
+  device = "tiff")
+
+```
+
+### Monthly distribution of Parv4 positivity 
+```{r,results='show', warning=FALSE, message=FALSE}
+
+# Read dataset
+fig2supb<-read.csv("C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/fig2supb.csv")
+attach(fig2supb)
+
+#Plot
+p2supb<-ggplot(fig2supb, aes(month, positivity, group=1)) +                                      
+  geom_point()+ geom_line() + scale_x_discrete(limits = c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"))+ theme_bw()+scale_color_lancet() +labs(x = "Month", y = "Positivity")+theme(plot.title = element_text(hjust = 0.5,face="bold",size=15))+
+  theme(
+    strip.text = element_text(size = 15),
+    axis.text = element_text(size = 7, face = "bold"),
+    legend.text = element_text(size = 15),
+    legend.title = element_text(size = 15),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.title.x = element_text(size = 15, face = "bold"),
+    axis.title.y = element_text(size = 15, face = "bold"),legend.position="none")+facet_wrap(year~.,ncol=4)+scale_y_continuous(limits=c(0.0,1.0))
+
+print(p2supb)
+
+# Save the plot
+ggsave(
+  filename = "C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/fig2supb_plot.pdf",
+  plot = p2supb,
+  width = 10, 
+  height = 6)
+
+
+# Save the plot  (TIFF)
+ggsave(
+  filename = "C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/fig2supb_plot.tiff",
+  plot = p2supb,
+  width = 10,
+  height = 6,
+  dpi = 300,
+  device = "tiff")
+
+```
+
+
+
+
+### WBC in Parv4 Positive and Negative
+
+```{r,results='show', warning=FALSE, message=FALSE}
+
+
+wbc<-ggplot(fig2, aes(x = PARV4, y = WBC,fill=PARV4))+geom_boxplot(outlier.size = 0.3,size=0.9)+scale_color_lancet()+theme_classic()+labs(x="PARV4",y= "WBC")+theme(
+  strip.text = element_text(size = 20),
+  axis.text = element_text(size = 15, face = "bold"),
+  legend.text = element_text(size = 20),
+  legend.title = element_text(size = 20),
+  axis.text.x = element_text(angle = 0, hjust = 1),
+  axis.title.x = element_text(size = 20, face = "bold"),
+  axis.title.y = element_text(size = 20, face = "bold"),legend.position = "none") +
+  scale_fill_manual(values = c("grey", "maroon"))+scale_y_continuous(limits = c(0, 1000), breaks = seq(0, 1000, by = 100))
+
+print(wbc)
+
+# Save the plot
+ggsave(
+  filename = "C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/figwbc_plot.pdf",
+  plot = wbc,
+  width = 10, 
+  height = 6)
+
+# Save the plot  (TIFF)
+ggsave(
+  filename = "C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/figwbc_plot.tiff",
+  plot = wbc,
+  width = 10,
+  height = 6,
+  dpi = 300,
+  device = "tiff")
+
+
+## Geographic Distribution
+
+# Reading the shapefiles
+sf <- st_read(dsn = "C:\\Users\\sdata\\OneDrive - Child Health Research Foundation\\scientific writing manuscript\\parv4 paper\\BGD_adm", layer = "BGD_adm2")
+shape <- readOGR(dsn = "C:\\Users\\sdata\\OneDrive - Child Health Research Foundation\\scientific writing manuscript\\parv4 paper\\BGD_adm", layer = "BGD_adm2")
+
+
+# Reading district-level data
+district_data <- read.csv("C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/figmap.csv")
+district_data2 <- read.csv("C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/Map-New-A10.csv")
+
+# Merge district data with shapefile
+sf_merged <- merge(sf, district_data2, by.x = "NAME_2", by.y = "Zila")
+
+# Create and plot the heatmap using tmap (for cases)
+supp1a<-tm_shape(sf_merged) +
+  tm_polygons("Freq.",
+              palette = "YlGnBu",
+              title = "PARV4 Cases",style="fixed",breaks=c(0,10,50,100,150),label=c("<10","10-49","50-99","100-150")) + tm_style("white")+
+  tm_layout(title = "Number of PARV4 Cases by District",legend.outside.position = "right",
+            title.size =1, title.position = c(0.3,0.98),legend.position = c(0.05,0.01),legend.width = 1.2,legend.text.size = 0.9,legend.title.size = 1)
+
+print(supp1a)
+
+
+            
+# Save the plot
+tmap_save(
+  tm = supp1a,
+  filename = "C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/figSupp1a_plot.pdf",
+  width = 7,
+  height = 10)
+
+# Save the plot as a TIFF file
+tmap_save(
+  tm = supp1a,
+  filename = "C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/figSupp1a_plot.tiff",
+  width = 7,
+  height = 10,
+  dpi = 300)
+
+
+# Create and plot the heatmap using tmap (for positivity)
+supp1b<-tm_shape(sf_merged) +
+  tm_polygons("Positivity",
+              palette = "YlGnBu",
+              title = "%Positivity") + tm_style("white")+
+  tm_layout(title = "PARV4 Positivity by District",legend.outside.position = "right",
+            title.size = 1, title.position = c(0.3,0.98),legend.position = c(0.05,0.01),legend.width = 1.2,legend.text.size = 0.9,legend.title.size = 1)
+
+print(supp1b)
+
+# Save the plot
+tmap_save(
+  tm = supp1b,
+  filename = "C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/figSupp1b_plot.pdf",
+  width = 7,
+  height = 10)
+
+# Save the plot as a TIFF file
+tmap_save(
+  tm = supp1b,
+  filename = "C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/figSupp1b_plot.tiff",
+  width = 7,
+  height = 10,
+  dpi = 300)
+
+
+## Distribution of CT Values
+df <- read_excel("C:/Users/sdata/OneDrive - Child Health Research Foundation/scientific writing manuscript/parv4 paper/manuscript-final-version-all-files/CTs.xlsx")
+
+percent_under_20<-round(mean(df$Hprv4Ct<20)*100,2)
+percent_under_25<-round(mean(df$Hprv4Ct<25)*100,2)
+
+ggplot(df, aes(x = Hprv4Ct)) +
+  geom_histogram(
+    binwidth = 1,boundary = 10,fill = "#2C3E50",color = "white",alpha = 0.9) +
+  scale_x_continuous(breaks = seq(10, 40, by = 1),limits = c(10, 40),expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0)) +
+  geom_vline(xintercept = 20, color = "black") +geom_vline(xintercept = 25, color = "black") +
+  annotate("text", x = 20, y = max(ggplot_build(ggplot(df, aes(x=Hprv4Ct)) + geom_histogram(binwidth=1))$data[[1]]$count)*0.6,
+           label = paste0("<20\n", percent_under_20, "%"), hjust = 1, vjust = 1, size = 5) +
+  annotate("text", x = 25, y = max(ggplot_build(ggplot(df, aes(x=Hprv4Ct)) + geom_histogram(binwidth=1))$data[[1]]$count)*0.6,
+           label = paste0("<25\n", percent_under_25, "%"), hjust = 1, vjust = 1, size = 5) +
+  labs(x = "CT Values", y = "Frequency") +
+  theme_classic(base_size = 14) +theme(axis.title = element_text(face = "bold"))
+
+  
+```
