@@ -1,0 +1,47 @@
+
+
+WARNING: RAxML is not checking sequences for duplicate seqs and sites with missing data!
+
+
+
+This is RAxML version 8.2.11 released by Alexandros Stamatakis on June 2017.
+
+With greatly appreciated code contributions by:
+Andre Aberer      (HITS)
+Simon Berger      (HITS)
+Alexey Kozlov     (HITS)
+Kassian Kobert    (HITS)
+David Dao         (KIT and HITS)
+Sarah Lutteropp   (KIT and HITS)
+Nick Pattengale   (Sandia)
+Wayne Pfeiffer    (SDSC)
+Akifumi S. Tanabe (NRIFS)
+Charlie Taylor    (UF)
+
+
+RAxML Bipartition Computation: Drawing support values from trees in file /media/chrf/Home03/Trial_Preonath/TPRV/Complete_PARV4_Analysis_06_03_26/Analysis_on_new_data_v4_08_03_26/Raxml/global/1000_bootstrap/RAxML_bootstrap.TPRV4_Global_108_global.bs1000 onto tree in file RAxML_bestTree.TPRV4_Global_108_global.bestTree
+
+
+RAxML was called as follows:
+
+raxmlHPC-PTHREADS-AVX -p 1206 -m GTRGAMMA -f b -t RAxML_bestTree.TPRV4_Global_108_global.bestTree -z /media/chrf/Home03/Trial_Preonath/TPRV/Complete_PARV4_Analysis_06_03_26/Analysis_on_new_data_v4_08_03_26/Raxml/global/1000_bootstrap/RAxML_bootstrap.TPRV4_Global_108_global.bs1000 -T 80 -o MH215556.1 -w /media/chrf/Home03/Trial_Preonath/TPRV/Complete_PARV4_Analysis_06_03_26/Analysis_on_new_data_v4_08_03_26/Raxml/global/1000_bootstrap -n TPRV4_Global_108_global.bestTree.bs1000 
+
+
+
+
+Found 1 tree in File RAxML_bestTree.TPRV4_Global_108_global.bestTree
+
+
+
+Found 1000 trees in File /media/chrf/Home03/Trial_Preonath/TPRV/Complete_PARV4_Analysis_06_03_26/Analysis_on_new_data_v4_08_03_26/Raxml/global/1000_bootstrap/RAxML_bootstrap.TPRV4_Global_108_global.bs1000
+
+
+
+Found 1 tree in File RAxML_bestTree.TPRV4_Global_108_global.bestTree
+
+
+
+Time for Computation of Bipartitions 0.108769
+Tree with bipartitions written to file:  /media/chrf/Home03/Trial_Preonath/TPRV/Complete_PARV4_Analysis_06_03_26/Analysis_on_new_data_v4_08_03_26/Raxml/global/1000_bootstrap/RAxML_bipartitions.TPRV4_Global_108_global.bestTree.bs1000
+Tree with bipartitions as branch labels written to file:  /media/chrf/Home03/Trial_Preonath/TPRV/Complete_PARV4_Analysis_06_03_26/Analysis_on_new_data_v4_08_03_26/Raxml/global/1000_bootstrap/RAxML_bipartitionsBranchLabels.TPRV4_Global_108_global.bestTree.bs1000
+Execution information file written to :  /media/chrf/Home03/Trial_Preonath/TPRV/Complete_PARV4_Analysis_06_03_26/Analysis_on_new_data_v4_08_03_26/Raxml/global/1000_bootstrap/RAxML_info.TPRV4_Global_108_global.bestTree.bs1000
