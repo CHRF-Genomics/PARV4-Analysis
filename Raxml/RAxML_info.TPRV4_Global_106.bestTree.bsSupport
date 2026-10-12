@@ -1,0 +1,47 @@
+
+
+WARNING: RAxML is not checking sequences for duplicate seqs and sites with missing data!
+
+
+
+This is RAxML version 8.2.11 released by Alexandros Stamatakis on June 2017.
+
+With greatly appreciated code contributions by:
+Andre Aberer      (HITS)
+Simon Berger      (HITS)
+Alexey Kozlov     (HITS)
+Kassian Kobert    (HITS)
+David Dao         (KIT and HITS)
+Sarah Lutteropp   (KIT and HITS)
+Nick Pattengale   (Sandia)
+Wayne Pfeiffer    (SDSC)
+Akifumi S. Tanabe (NRIFS)
+Charlie Taylor    (UF)
+
+
+RAxML Bipartition Computation: Drawing support values from trees in file RAxML_bootstrap.TPRV4_Global_106.bsSupport onto tree in file RAxML_bestTree.TPRV4_Global_106.bestTree
+
+
+RAxML was called as follows:
+
+raxmlHPC-PTHREADS-AVX -p 1206 -m GTRGAMMA -f b -t RAxML_bestTree.TPRV4_Global_106.bestTree -z RAxML_bootstrap.TPRV4_Global_106.bsSupport -T 16 -o MH215556.1 -n TPRV4_Global_106.bestTree.bsSupport 
+
+
+
+
+Found 1 tree in File RAxML_bestTree.TPRV4_Global_106.bestTree
+
+
+
+Found 1000 trees in File RAxML_bootstrap.TPRV4_Global_106.bsSupport
+
+
+
+Found 1 tree in File RAxML_bestTree.TPRV4_Global_106.bestTree
+
+
+
+Time for Computation of Bipartitions 0.108217
+Tree with bipartitions written to file:  /media/chrf/Home03/Trial_Preonath/TPRV/Complete_PARV4_Analysis_06_03_26/Analysis_on_new_data_v5_12_10_26/Raxml/RAxML_bipartitions.TPRV4_Global_106.bestTree.bsSupport
+Tree with bipartitions as branch labels written to file:  /media/chrf/Home03/Trial_Preonath/TPRV/Complete_PARV4_Analysis_06_03_26/Analysis_on_new_data_v5_12_10_26/Raxml/RAxML_bipartitionsBranchLabels.TPRV4_Global_106.bestTree.bsSupport
+Execution information file written to :  /media/chrf/Home03/Trial_Preonath/TPRV/Complete_PARV4_Analysis_06_03_26/Analysis_on_new_data_v5_12_10_26/Raxml/RAxML_info.TPRV4_Global_106.bestTree.bsSupport

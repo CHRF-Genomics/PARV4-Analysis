@@ -1,5 +1,5 @@
-home=/media/chrf/Home03/Trial_Preonath/TPRV/Tanmoy_Recheck_tetratype
-References=/home/chrf/Reference_Sequences/
+home=..../TPRV/Tanmoy_Recheck_tetratype
+References=../Reference_Sequences/
 
 mkdir -p $home\/Genotype/SAM
 
